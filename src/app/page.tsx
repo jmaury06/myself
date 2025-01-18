@@ -1,101 +1,121 @@
-import Image from "next/image";
+"use client";
+import { useRouter } from "next/navigation";
+import { useRef } from "react";
+import { GrLinkedin } from "react-icons/gr";
+import { ImGithub } from "react-icons/im";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const formRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter()
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleExternalLink = (url: string) => {
+    router.push(url)
+  }
+
+  return (
+    <div className=" min-h-screen bg-cover bg-center bg-fixed">
+      <main >
+        <section className="h-screen relative flex justify-center items-center">
+          {/* background image */}
+          <div
+            className="absolute opacity-50 inset-0 bg-cover bg-center grayscale"
+            style={{
+              backgroundImage: "url('/img/yo.jpg')",
+              zIndex: -1,
+            }}
+          ></div>
+
+          <div className="absolute top-12 left-12 text-white">
+            <a href="/about">
+              <a className="text-lg font-semibold hover:text-cyan-400">ABOUT ME</a>
+            </a>
+          </div>
+          <div className="absolute top-12 right-12 text-white">
+            <a href="/mywork">
+              <a className="text-lg font-semibold hover:text-cyan-400">MY WORK</a>
+            </a>
+          </div>
+
+          <div className="text-center text-cyan-400 z-50 bg-['#10C8D4'];
+]">
+            <h2 className="text-8xl font-extrabold">JAIRO MAURY</h2>
+            <p className="text-3xl">FullStack Developer</p>
+          </div>
+
+          <div className="absolute bottom-12 left-12">
+            <button
+              onClick={scrollToForm}
+              className="text-white border border-white px-4 py-2 rounded-full hover:bg-cyan-400 hover:border-cyan-400 hover:font-semibold transition duration-300"
+            >
+              LET'S WORK TOGETHER
+            </button>
+          </div>
+          <div className="absolute flex flex-col bottom-12 right-12 gap-y-2">
+            <p
+              onClick={scrollToForm}
+              className="text-white"
+            >
+              FIND ME AT
+            </p>
+            <div className="flex justify-around gap-x-4">
+              <GrLinkedin
+                className="hover:text-cyan-400 cursor-pointer size-6"
+                onClick={() => handleExternalLink('https://www.linkedin.com/in/jmauryh/')}
+              />
+              <ImGithub
+                className="hover:text-cyan-400 cursor-pointer size-6"
+                onClick={() => handleExternalLink('https://github.com/jmaury06')}
+              />
+            </div>
+
+          </div>
+        </section>
+
+        <section className="h-screen relative bg-slate-500/40">
+          {/* Formulario */}
+          <div ref={formRef} className="absolute w-6/12 bottom-16 right-[50%] translate-x-[50%] mt-20 max-w-2xl mx-auto p-8 bg-black bg-opacity-75 text-white rounded-lg shadow-lg">
+            <div className="flex flex-col w-full">
+              <h2 className="text-2xl text-cyan-400 font-semibold mb-4">I CAN BE YOUR DEVELOPER</h2>
+              <p className="mb-6">{`Tell me a bit about your project. I'll contact you as soon as possible.`}</p>
+
+              {/* Inputs del formulario */}
+              <form>
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  className="w-full p-3 mb-4 bg-gray-700 border border-gray-600 rounded-md text-white"
+                />
+                <textarea
+                  placeholder="Tell me about your project"
+                  className="w-full p-3 h-32 bg-gray-700 border border-gray-600 rounded-md text-white"
+                ></textarea>
+                <button
+                  type="submit"
+                  className="flex w-24 mx-auto justify-center text-white border border-white px-4 py-2 mt-4 rounded-full hover:bg-white hover:text-black transition duration-300"
+                >
+                  SEND
+                </button>
+              </form>
+
+              {/* Botón Back to Top */}
+              <button
+                onClick={scrollToTop}
+                className="flex w-40 mx-auto justify-center text-white border border-white px-4 py-2 mt-4 rounded-full hover:bg-white hover:text-black transition duration-300"
+              >
+                ▲ Back to top
+              </button>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }

@@ -26,9 +26,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
         {children}
+              <footer className="absolute flex justify-center w-full mx-auto bottom-4 text-white">
+        <p>© 2024 Jairo Maury</p>
+      </footer>
       </body>
     </html>
   );
